@@ -106,3 +106,14 @@ button { cursor: pointer; }
 .active-filter { background: #0b1f4a; color: white; border-color: #0b1f4a; }
 .error { color: #a00; }
 .success { color: #137333; }
+
+.card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .5rem;
+}
+
+.card-actions .ghost,
+.card-actions .primary {
+  text-align: center;
+}

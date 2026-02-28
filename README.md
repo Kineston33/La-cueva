@@ -41,10 +41,11 @@ Fixaro es un marketplace local de servicios con enfoque mobile-first para conect
    - Painter
    - General technician
 4. Home de cliente con búsqueda/filtros por categoría y ciudad.
-5. Tarjetas de técnicos con botón de contacto WhatsApp.
-6. Dashboard de técnico para editar perfil y disponibilidad.
-7. Vista admin básica para listar usuarios y técnicos.
-8. Rutas protegidas por autenticación/rol en frontend para dashboard y admin.
+5. Ruta pública de perfil técnico `/technician/:nombre` (ej: `/technician/carlos-tecnico`).
+6. Tarjetas de técnicos con botón de contacto WhatsApp.
+7. Dashboard de técnico para editar perfil y disponibilidad.
+8. Vista admin básica para listar usuarios y técnicos.
+9. Rutas protegidas por autenticación/rol en frontend para dashboard y admin.
 
 ## Setup rápido
 
@@ -79,6 +80,7 @@ npm run dev
 - `GET /api/auth/me`
 - `GET /api/market/categories`
 - `GET /api/market/technicians?category=&city=`
+- `GET /api/market/technicians/:nombre`
 - `PUT /api/users/profile`
 - `GET/PUT /api/users/technician/profile`
 - `GET /api/admin/users` (admin)

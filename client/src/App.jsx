@@ -5,6 +5,7 @@ import AuthPage from './pages/AuthPage';
 import TechnicianDashboard from './pages/TechnicianDashboard';
 import AdminPage from './pages/AdminPage';
 import CustomerProfile from './pages/CustomerProfile';
+import TechnicianPublicPage from './pages/TechnicianPublicPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useAuth } from './context/AuthContext';
 
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<AuthPage />} />
         <Route path="/signup" element={<AuthPage mode="signup" />} />
+        <Route path="/technician/:nombre" element={<TechnicianPublicPage />} />
         <Route
           path="/profile"
           element={

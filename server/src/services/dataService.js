@@ -62,9 +62,18 @@ const publicUser = (u) => {
   return rest;
 };
 
+const slugify = (value = '') =>
+  value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
 const toTechnician = (user, profile) => ({
   id: user.id,
   name: user.name,
+  slug: slugify(user.name),
   city: user.city,
   role: user.role,
   category: profile?.category || '',
@@ -201,6 +210,11 @@ export const searchTechnicians = async ({ category, city }) => {
     .map((u) => toTechnician(u, memory.technicianProfiles.find((p) => p.user_id === u.id)))
     .filter((t) => (category ? t.category === category : true))
     .filter((t) => (city ? t.city.toLowerCase().includes(city.toLowerCase()) : true));
+};
+
+export const getTechnicianBySlug = async (slug) => {
+  const technicians = await searchTechnicians({});
+  return technicians.find((tech) => tech.slug === slugify(slug)) || null;
 };
 
 export const listUsers = async () => {
