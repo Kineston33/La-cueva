@@ -60,6 +60,8 @@ cp server/.env.example server/.env
 cp client/.env.example client/.env
 ```
 
+`client/.env` usa `VITE_API_URL` (ejemplo: `http://localhost:4000/api`). Puede llevar o no slash final (`/`) porque el cliente lo normaliza automáticamente.
+
 ### 3) (Opcional) Conectar Supabase
 - Crea un proyecto Supabase.
 - Ejecuta `supabase/schema.sql` en SQL Editor.

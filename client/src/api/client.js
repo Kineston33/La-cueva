@@ -1,4 +1,13 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
+const DEFAULT_API_URL = 'http://localhost:4000/api';
+
+const normalizeBaseUrl = (value) => {
+  const raw = (value || DEFAULT_API_URL).trim();
+  return raw.replace(/\/+$/, '');
+};
+
+const normalizePath = (path) => (path.startsWith('/') ? path : `/${path}`);
+
+const API_URL = normalizeBaseUrl(import.meta.env.VITE_API_URL);
 
 const getHeaders = () => {
   const token = localStorage.getItem('fixaro_token');
@@ -9,7 +18,7 @@ const getHeaders = () => {
 };
 
 export const api = async (path, options = {}) => {
-  const response = await fetch(`${API_URL}${path}`, {
+  const response = await fetch(`${API_URL}${normalizePath(path)}`, {
     ...options,
     headers: { ...getHeaders(), ...(options.headers || {}) }
   });
