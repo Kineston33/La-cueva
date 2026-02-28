@@ -1,0 +1,119 @@
+:root {
+  font-family: Inter, system-ui, sans-serif;
+  color: #0b1f4a;
+  background: #f5f7ff;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+
+.app-shell {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: .5rem;
+}
+
+.brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  text-decoration: none;
+}
+
+.logo-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #0d56c3;
+  color: white;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+}
+
+.brand {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0b1f4a;
+  letter-spacing: .03em;
+}
+
+.brand-sub {
+  margin: 0;
+  font-size: .75rem;
+  color: #6f778e;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.tabs { display: flex; gap: 1rem; margin-bottom: 1rem; }
+.tabs a { color: #0b1f4a; text-decoration: none; font-weight: 600; }
+
+.stack { display: flex; flex-direction: column; gap: .75rem; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+
+input, select, textarea, button, .primary, .ghost {
+  border-radius: 12px;
+  padding: .8rem;
+  font-size: 1rem;
+  border: 1px solid #d5dcf7;
+}
+
+textarea { min-height: 90px; }
+button { cursor: pointer; }
+
+.primary {
+  display: inline-block;
+  text-align: center;
+  background: #0b1f4a;
+  color: white;
+  border: none;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.ghost { background: white; color: #0b1f4a; text-decoration: none; }
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 1rem;
+  border: 1px solid #dbe2ff;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.badge {
+  width: fit-content;
+  padding: .25rem .6rem;
+  border-radius: 999px;
+  font-size: .8rem;
+  color: #0b1f4a;
+  background: #e8edff;
+}
+
+.active-filter { background: #0b1f4a; color: white; border-color: #0b1f4a; }
+.error { color: #a00; }
+.success { color: #137333; }
+
+.card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .5rem;
+}
+
+.card-actions .ghost,
+.card-actions .primary {
+  text-align: center;
+}
