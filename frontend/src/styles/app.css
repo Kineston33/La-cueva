@@ -1,0 +1,72 @@
+:root {
+  font-family: Inter, system-ui, Arial, sans-serif;
+  background: #f4f7fb;
+  color: #101828;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.nav {
+  background: #0b2a4a;
+  color: #fff;
+  padding: 0.75rem 1rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 5px 20px rgba(11, 42, 74, 0.08);
+}
+
+.stack { display: grid; gap: 0.75rem; }
+.row { display: flex; align-items: center; gap: 0.5rem; }
+.between { justify-content: space-between; }
+
+input, select, textarea, button {
+  width: 100%;
+  border: 1px solid #d0d5dd;
+  border-radius: 10px;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+button, .button-link {
+  background: #0b2a4a;
+  color: #fff;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.link {
+  background: transparent;
+  color: #0b2a4a;
+  border: none;
+  text-decoration: underline;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.chip {
+  background: #e8eef6;
+  color: #0b2a4a;
+}
+
+.chip.active { background: #0b2a4a; color: white; }
+.badge { color: #067647; font-size: 0.85rem; }
+.badge.busy { color: #b42318; }
+.muted { color: #475467; margin: 0; }
+.error { color: #b42318; }
