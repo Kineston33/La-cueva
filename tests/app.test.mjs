@@ -33,3 +33,8 @@ test('no hay scripts externos ni SDK de anuncios/analítica declarados', () => {
   assert.doesNotMatch(html, /<script[^>]+src\s*=\s*["']https?:/i);
   assert.doesNotMatch(html, /googlesyndication|doubleclick|firebase-analytics|google-analytics/i);
 });
+
+test('el contenedor Android no registra un service worker redundante', () => {
+  assert.match(html, /window\.Capacitor\?\.isNativePlatform\?\.\(\)===true/);
+  assert.match(html, /navigator\.serviceWorker\.register/);
+});
