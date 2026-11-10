@@ -34,7 +34,9 @@ test('no hay scripts externos ni SDK de anuncios/analítica declarados', () => {
   assert.doesNotMatch(html, /googlesyndication|doubleclick|firebase-analytics|google-analytics/i);
 });
 
-test('el contenedor Android no registra un service worker redundante', () => {
-  assert.match(html, /window\.Capacitor\?\.isNativePlatform\?\.\(\)===true/);
+test('el bundle Android identifica el runtime nativo y evita registrar un service worker', async () => {
+  const builder = await readFile(new URL('../scripts/build-web.mjs', import.meta.url), 'utf8');
+  assert.match(builder, /window\.__BRUJULA_NATIVE__=true/);
+  assert.match(html, /window\.__BRUJULA_NATIVE__===true/);
   assert.match(html, /navigator\.serviceWorker\.register/);
 });
