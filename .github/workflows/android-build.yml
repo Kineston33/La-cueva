@@ -58,6 +58,22 @@ jobs:
         working-directory: android
         run: ./gradlew --no-daemon assembleDebug bundleRelease
 
+      - name: Verify target API and Android privacy manifest
+        run: |
+          APK="android/app/build/outputs/apk/debug/app-debug.apk"
+          TARGET_SDK="$(apkanalyzer manifest target-sdk "$APK")"
+          echo "Target SDK: $TARGET_SDK"
+          test "$TARGET_SDK" -ge 36
+          PERMISSIONS="$(apkanalyzer manifest permissions "$APK")"
+          printf '%s\n' "$PERMISSIONS"
+          if printf '%s\n' "$PERMISSIONS" | grep -E 'android.permission.(INTERNET|ACCESS_FINE_LOCATION|ACCESS_COARSE_LOCATION|CAMERA|RECORD_AUDIO|READ_CONTACTS|WRITE_CONTACTS|READ_PHONE_STATE|READ_PHONE_NUMBERS|AD_ID)'; then
+            echo "Se encontró un permiso de red o sensible no esperado."
+            exit 1
+          fi
+          MANIFEST="$(apkanalyzer manifest print "$APK")"
+          printf '%s\n' "$MANIFEST" | grep -q 'android:allowBackup="false"'
+          printf '%s\n' "$MANIFEST" | grep -q 'android:dataExtractionRules="@xml/data_extraction_rules"'
+
       - name: Upload Android artifacts
         uses: actions/upload-artifact@v4
         with:
