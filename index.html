@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#315b54"><meta name="description" content="Brújula ayuda a niños a organizar sus rutinas y reconocer sus emociones.">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg">
+<title>Brújula — Mi día, paso a paso</title>
+<style>
+:root{--green:#315b54;--mint:#e7f1ec;--cream:#fbf8f0;--ink:#263a36;--orange:#e9a45b;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:var(--green);color:white;padding:24px 20px 30px;border-radius:0 0 28px 28px}header small{opacity:.85}h1{margin:6px 0;font-size:2rem}main{max-width:680px;margin:auto;padding:18px 16px 40px}
+.panel{background:white;border-radius:20px;padding:18px;margin:14px 0;box-shadow:0 4px 18px #233b3210}
+h2{font-size:1.15rem;margin:0 0 12px}.muted{color:#66756f;font-size:.92rem}
+.actions{display:flex;gap:9px;flex-wrap:wrap}.btn{border:0;border-radius:14px;padding:12px 16px;background:var(--green);color:white;font-weight:650;font-size:1rem;cursor:pointer}.btn.secondary{background:var(--mint);color:var(--green)}.btn:focus-visible,input:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.task{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #edf0ec}.task:last-child{border:0}.task input{width:22px;height:22px;accent-color:var(--green)}.task.done span{text-decoration:line-through;color:#82908a}
+.emotions{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.emotion{background:var(--mint);border:2px solid transparent;border-radius:15px;padding:13px 5px;font-size:1rem;cursor:pointer}.emotion[aria-pressed=true]{border-color:var(--green);background:#d4e6dc}.face{display:block;font-size:1.7rem;margin-bottom:5px}
+#timer{font-size:2.5rem;font-weight:750;text-align:center;margin:12px}.field{width:100%;padding:12px;border:1px solid #ccd8d1;border-radius:12px;font:inherit;margin:5px 0 10px}
+footer{text-align:center;color:#718079;font-size:.8rem;padding:20px}
+</style></head>
+<body>
+<header><small>UN PASO A LA VEZ</small><h1>Hola, explorador/a</h1><div>Hoy podemos avanzar poquito a poquito.</div></header>
+<main>
+<section class="panel"><h2>☀️ Mi rutina de hoy</h2><p class="muted">Marcá cada paso cuando lo termines. Un adulto puede ayudarte a preparar la lista.</p>
+<div id="tasks"></div>
+<div class="actions"><button class="btn secondary" id="add">＋ Agregar paso</button><button class="btn secondary" id="reset">Reiniciar día</button></div><p id="progress" class="muted" aria-live="polite"></p></section>
+<section class="panel"><h2>💚 ¿Cómo me siento?</h2><p class="muted">Todas las emociones son válidas. Elegí la que se parece a la tuya.</p>
+<div class="emotions" id="emotions">
+<button class="emotion" data-feel="Feliz" aria-pressed="false"><span class="face">😄</span>Feliz</button>
+<button class="emotion" data-feel="Tranquilo/a" aria-pressed="false"><span class="face">😌</span>En calma</button>
+<button class="emotion" data-feel="Triste" aria-pressed="false"><span class="face">😢</span>Triste</button>
+<button class="emotion" data-feel="Enojado/a" aria-pressed="false"><span class="face">😠</span>Con enojo</button>
+<button class="emotion" data-feel="Nervioso/a" aria-pressed="false"><span class="face">😟</span>Nervioso/a</button>
+<button class="emotion" data-feel="Cansado/a" aria-pressed="false"><span class="face">😴</span>Cansado/a</button>
+</div><p id="feeling" class="muted" aria-live="polite">Podés contarle a un adulto de confianza cómo te sentís.</p>
+<div class="actions"><button class="btn secondary" id="breathe">Hacer una pausa para respirar</button></div><p id="breathText" class="muted" aria-live="polite"></p></section>
+<section class="panel"><h2>⏳ Tiempo de concentración</h2><p class="muted">Elegí un ratito para leer, estudiar o hacer una actividad.</p>
+<label for="minutes">Minutos</label><input class="field" id="minutes" type="number" min="1" max="60" value="10">
+<div id="timer" aria-live="off">10:00</div><div class="actions"><button class="btn" id="start">Empezar</button><button class="btn secondary" id="pause">Pausar</button><button class="btn secondary" id="stop">Reiniciar</button></div><p id="timerStatus" class="muted" aria-live="polite"></p></section>
+<section class="panel"><h2>👨‍👩‍👧 Espacio para adultos</h2><p class="muted">Las rutinas se guardan solamente en este dispositivo. No se envían datos a ningún servidor.</p><label for="newTask">Nuevo paso de la rutina</label><input class="field" id="newTask" maxlength="50" placeholder="Ej.: Preparar la mochila"><button class="btn" id="saveTask">Guardar paso</button></section>
+</main><footer>Brújula · Herramienta de acompañamiento, no reemplaza el apoyo de adultos.</footer>
+<script>
+const KEY='brujula_tasks_v1';const defaults=['Despertarme y tender la cama','Lavarse los dientes','Desayunar','Preparar la mochila','Hacer una pausa y jugar'];
+let tasks=load();function load(){try{return JSON.parse(localStorage.getItem(KEY))||defaults.map((text,i)=>({id:i+1,text,done:false}))}catch{return defaults.map((text,i)=>({id:i+1,text,done:false}))}}
+function persist(){localStorage.setItem(KEY,JSON.stringify(tasks))}
+function render(){const root=document.getElementById('tasks');root.innerHTML='';tasks.forEach(t=>{const row=document.createElement('label');row.className='task'+(t.done?' done':'');const cb=document.createElement('input');cb.type='checkbox';cb.checked=t.done;cb.addEventListener('change',()=>{t.done=cb.checked;persist();render()});const span=document.createElement('span');span.textContent=t.text;row.append(cb,span);root.append(row)});let done=tasks.filter(t=>t.done).length;document.getElementById('progress').textContent=done+' de '+tasks.length+' pasos completados.'}
+function addTask(){const input=document.getElementById('newTask');const text=input.value.trim();if(!text)return;tasks.push({id:Date.now(),text,done:false});persist();input.value='';render()}
+document.getElementById('saveTask').onclick=addTask;document.getElementById('add').onclick=()=>{document.getElementById('newTask').focus()};document.getElementById('reset').onclick=()=>{tasks=tasks.map(t=>({...t,done:false}));persist();render()};
+document.querySelectorAll('.emotion').forEach(b=>b.onclick=()=>{document.querySelectorAll('.emotion').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');document.getElementById('feeling').textContent='Elegiste: '+b.dataset.feel+'. Si querés, compartilo con un adulto de confianza.'});
+let remaining=600,interval=null;const timer=document.getElementById('timer'),minutes=document.getElementById('minutes');function show(){timer.textContent=String(Math.floor(remaining/60)).padStart(2,'0')+':'+String(remaining%60).padStart(2,'0')}
+function stop(){clearInterval(interval);interval=null;remaining=Math.min(60,Math.max(1,Number(minutes.value)||10))*60;show();document.getElementById('timerStatus').textContent='Listo para empezar.'}
+document.getElementById('start').onclick=()=>{if(interval)return;if(remaining<=0)stop();interval=setInterval(()=>{remaining--;show();if(remaining<=0){clearInterval(interval);interval=null;document.getElementById('timerStatus').textContent='¡Terminaste tu tiempo! Hacé una pausa.'}},1000);document.getElementById('timerStatus').textContent='Tiempo en marcha.'};
+document.getElementById('pause').onclick=()=>{clearInterval(interval);interval=null;document.getElementById('timerStatus').textContent='Pausa.'};document.getElementById('stop').onclick=stop;minutes.onchange=stop;
+document.getElementById('breathe').onclick=()=>{const el=document.getElementById('breathText');el.textContent='Inhalá suavemente mientras contás hasta 4… y exhalá despacio contando hasta 4. Repetilo tres veces, sin forzar.'};
+render();stop();if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script></body></html>
