@@ -51,5 +51,5 @@ function stop(){clearInterval(interval);interval=null;remaining=Math.min(60,Math
 document.getElementById('start').onclick=()=>{if(interval)return;if(remaining<=0)stop();interval=setInterval(()=>{remaining--;show();if(remaining<=0){clearInterval(interval);interval=null;document.getElementById('timerStatus').textContent='¡Terminaste tu tiempo! Hacé una pausa.'}},1000);document.getElementById('timerStatus').textContent='Tiempo en marcha.'};
 document.getElementById('pause').onclick=()=>{clearInterval(interval);interval=null;document.getElementById('timerStatus').textContent='Pausa.'};document.getElementById('stop').onclick=stop;minutes.onchange=stop;
 document.getElementById('breathe').onclick=()=>{const el=document.getElementById('breathText');el.textContent='Inhalá suavemente mientras contás hasta 4… y exhalá despacio contando hasta 4. Repetilo tres veces, sin forzar.'};
-render();stop();const isNative=window.Capacitor?.isNativePlatform?.()===true;if('serviceWorker'in navigator&&!isNative)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+render();stop();const isNative=window.__BRUJULA_NATIVE__===true;if('serviceWorker'in navigator&&!isNative)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script></body></html>
