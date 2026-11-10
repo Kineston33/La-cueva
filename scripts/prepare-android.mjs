@@ -9,7 +9,7 @@ try {
 }
 
 for (const [name, value] of [['minSdkVersion', 24], ['compileSdkVersion', 36], ['targetSdkVersion', 36]]) {
-  const pattern = new RegExp('(\\b' + name + '\\s*=\\s*)\\d+');
+  const pattern = new RegExp('\\s' + name + '="[^"]*"');
   if (!pattern.test(gradle)) {
     throw new Error('No se encontró ' + name + ' en ' + variablesPath + '; revisar la plantilla de Capacitor antes de compilar.');
   }
@@ -42,7 +42,7 @@ if (applicationStart < 0 || applicationEnd < 0) {
 }
 
 function setAttribute(tag, name, value) {
-  const pattern = new RegExp("\\s" + name + "=[\\"'][^\\"']*[\\"']");
+  const pattern = new RegExp('\\s' + name + '="[^"]*"');
   return pattern.test(tag)
     ? tag.replace(pattern, ' ' + name + '="' + value + '"')
     : tag.replace(/>$/, ' ' + name + '="' + value + '">');
