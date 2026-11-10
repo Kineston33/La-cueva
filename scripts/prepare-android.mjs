@@ -9,7 +9,7 @@ try {
 }
 
 for (const [name, value] of [['minSdkVersion', 24], ['compileSdkVersion', 36], ['targetSdkVersion', 36]]) {
-  const pattern = new RegExp('\\s' + name + '="[^"]*"');
+  const pattern = new RegExp('(\\b' + name + '\\s*=\\s*)\\d+');
   if (!pattern.test(gradle)) {
     throw new Error('No se encontró ' + name + ' en ' + variablesPath + '; revisar la plantilla de Capacitor antes de compilar.');
   }
