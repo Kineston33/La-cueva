@@ -18,13 +18,13 @@ El proyecto usa Capacitor 8 y genera el proyecto nativo Android durante la compi
 - Identificador Android: `ar.brujula.infantil`.
 - Nombre de la app: `Brújula`.
 - `webDir`: `www`, generado desde los recursos locales del repositorio.
-- API objetivo y de compilación configuradas en 36 (Android 16).
+- SDK mínimo 24 (Android 7.0), API de compilación 36 y API objetivo 36 (Android 16).
 - No se agregaron SDKs de anuncios, analítica, chat ni permisos sensibles.
 - La compilación se ejecuta en GitHub Actions con Node 22, Java 21 y Android SDK 36.
 
 ### Compilar localmente
 
-Requisitos: Node.js 22+, Android Studio y Android SDK API 36.
+Requisitos: Node.js 22+, Android Studio compatible con Capacitor 8 y Android SDK API 36.
 
 ```bash
 npm install
