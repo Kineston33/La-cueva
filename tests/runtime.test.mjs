@@ -4,8 +4,10 @@ import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 
 const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
-const script = html.match(/<script>([\\s\\S]*?)<\\/script>/)?.[1];
-assert.ok(script, 'No se encontró el script principal de la app');
+const scriptStart = html.indexOf('<script>') + '<script>'.length;
+const scriptEnd = html.indexOf('</script>', scriptStart);
+const script = html.slice(scriptStart, scriptEnd);
+assert.ok(scriptStart >= '<script>'.length && scriptEnd > scriptStart, 'No se encontró el script principal de la app');
 
 class Element {
   constructor(tag = 'div') {
