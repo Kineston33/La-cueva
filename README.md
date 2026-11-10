@@ -45,7 +45,7 @@ cd android
 
 ### Compilación automática
 
-El workflow `.github/workflows/android-build.yml` se ejecuta al hacer push a `main` o manualmente desde la pestaña Actions. Ejecuta las pruebas estáticas y genera:
+El workflow `.github/workflows/android-build.yml` se ejecuta al hacer push a `main` o manualmente desde la pestaña Actions. Ejecuta pruebas de estructura y lógica con DOM simulado, prepara el bundle local y genera:
 
 - APK debug para pruebas.
 - AAB release sin firmar.
@@ -54,17 +54,17 @@ Los artefactos se publican como artifact de GitHub Actions durante 14 días. El 
 
 ## Privacidad y seguridad
 
-La app no incorpora cuentas, publicidad, analítica, chat, ubicación ni backend. Las rutinas se guardan en el almacenamiento local del dispositivo. La selección emocional no se guarda como historial. El código de la app no incorpora SDKs de terceros.
+La app no incorpora cuentas, publicidad, analítica, chat, ubicación ni backend. Las rutinas se guardan en `localStorage` del dispositivo. La selección emocional no se guarda como historial. No se integran SDKs de anuncios, seguimiento ni analítica; el proyecto Android usa las dependencias base de Capacitor y AndroidX.
 
-La compilación Capacitor puede incluir el permiso de red requerido por el runtime WebView; no se añadió funcionalidad de envío de datos. Hay que inspeccionar el manifiesto Android generado y probar el comportamiento de red antes de publicar.
+Durante la preparación Android se elimina del manifiesto fusionado el permiso `INTERNET` y se desactivan las copias de seguridad de la app, tanto en nube como en transferencia entre dispositivos. La app utiliza únicamente recursos empaquetados localmente. Estos controles deben volver a comprobarse sobre cada APK/AAB generado.
 
 ## Pendiente antes de Google Play
 
-1. Ejecutar y revisar el resultado del workflow de Android.
-2. Probar APK en dispositivos reales: instalación, rotación, navegación, almacenamiento y funcionamiento sin conexión.
-3. Revisar el manifiesto Android final y permisos efectivos.
-4. Crear una política de privacidad pública, con identidad y contacto reales del responsable, y enlazarla dentro de la app y en Play Console.
-5. Completar Seguridad de los datos, audiencia objetivo, clasificación IARC y declaraciones de la Política de Familias con información veraz.
+1. Instalar el APK en dispositivos reales y probar inicio, navegación, rotación, persistencia, cierre/reapertura y uso en modo avión.
+2. Verificar el manifiesto del AAB de release, en particular `targetSdk 36`, ausencia de permisos de red/sensibles y copias de seguridad desactivadas.
+3. Crear una política de privacidad pública, con identidad y contacto reales del responsable, y enlazarla dentro de la app y en Play Console.
+4. Completar Seguridad de los datos, audiencia objetivo, clasificación IARC y declaraciones de la Política de Familias con información veraz.
+5. Completar la declaración de Apps de salud: Google exige el formulario para todas las apps; evaluar y declarar correctamente si el ejercicio de respiración entra en estrés/relajación.
 6. Confirmar el identificador Android y preparar iconos nativos y recursos gráficos de tienda.
 7. Configurar firma de release, ficha de tienda, capturas y pruebas requeridas por Play Console.
 
