@@ -15,7 +15,7 @@ Aplicación en español para acompañar rutinas infantiles y alfabetización emo
 
 El proyecto usa Capacitor 8.6.0 y genera el proyecto nativo Android durante la compilación automatizada.
 
-- Identificador Android: `ar.brujula.infantil`.
+- Identificador Android provisional: `ar.brujula.infantil` (confirmarlo antes de publicar; debe mantenerse estable).
 - Nombre de la app: `Brújula`.
 - `webDir`: `www`, generado desde los recursos locales del repositorio.
 - SDK mínimo 24 (Android 7.0), API de compilación 36 y API objetivo 36 (Android 16).
@@ -65,7 +65,8 @@ La compilación Capacitor puede incluir el permiso de red requerido por el runti
 3. Revisar el manifiesto Android final y permisos efectivos.
 4. Crear una política de privacidad pública, con identidad y contacto reales del responsable, y enlazarla dentro de la app y en Play Console.
 5. Completar Seguridad de los datos, audiencia objetivo, clasificación IARC y declaraciones de la Política de Familias con información veraz.
-6. Configurar firma de release, ficha de tienda, capturas, icono y pruebas requeridas por Play Console.
+6. Confirmar el identificador Android y preparar iconos nativos y recursos gráficos de tienda.
+7. Configurar firma de release, ficha de tienda, capturas y pruebas requeridas por Play Console.
 
 ## Alcance
 
