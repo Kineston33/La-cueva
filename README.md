@@ -13,7 +13,7 @@ Aplicación en español para acompañar rutinas infantiles y alfabetización emo
 
 ## Proyecto Android
 
-El proyecto usa Capacitor 8 y genera el proyecto nativo Android durante la compilación automatizada.
+El proyecto usa Capacitor 8.6.0 y genera el proyecto nativo Android durante la compilación automatizada.
 
 - Identificador Android: `ar.brujula.infantil`.
 - Nombre de la app: `Brújula`.
